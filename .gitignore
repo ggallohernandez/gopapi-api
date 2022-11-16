@@ -1,6 +1,6 @@
 ### Composer ###
 composer.phar
-/vendor/
+/src/vendor/
 
 ### PHPUnit ###
 # Covers PHPUnit
