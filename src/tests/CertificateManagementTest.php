@@ -8,7 +8,7 @@ use PHPUnit\Framework\TestCase;
 use App\DTOs\CreateCertificateRequest;
 use App\Services\CertificateService;
 use App\Services\ICertificateManager;
-use App\Services\IDomainVerifyer;
+use App\Services\IDomainVerifier;
 
 class CertificateManagementTest extends TestCase
 {
@@ -25,15 +25,15 @@ class CertificateManagementTest extends TestCase
         
         $request = new CreateCertificateRequest($domain, $validity_in_days, $csr);
 
-        $domainVerifyerService = $this->createStub(IDomainVerifyer::class);
-        $domainVerifyerService->method('verify')
+        $domainVerifierService = $this->createStub(IDomainVerifier::class);
+        $domainVerifierService->method('verify')
              ->willReturn(true);
 
         $certificateManager = $this->createStub(ICertificateManager::class);
         $certificateManager->method('createCertificate')
              ->willReturn(new Certificate($domain, '', ''));
 
-        $certificateService = new CertificateService($domainVerifyerService, $certificateManager);
+        $certificateService = new CertificateService($domainVerifierService, $certificateManager);
 
         $certificate = $certificateService->createCertificate($request);
 

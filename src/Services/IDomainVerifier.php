@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-interface IDomainVerifyer
+interface IDomainVerifier
 {
     public function verify(string $domain): bool;
 }

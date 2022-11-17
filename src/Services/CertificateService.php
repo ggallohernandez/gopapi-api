@@ -6,12 +6,12 @@ use App\DTOs\CreateCertificateRequest;
 
 class CertificateService
 {
-    protected IDomainVerifyer $domainVerifyer;
+    protected IDomainVerifier $domainVerifier;
     protected ICertificateManager $certificateManager;
 
-    public function __construct(IDomainVerifyer $domainVerifyer, ICertificateManager $certificateManager)
+    public function __construct(IDomainVerifier $domainVerifier, ICertificateManager $certificateManager)
     {
-        $this->domainVerifyer = $domainVerifyer;
+        $this->domainVerifier = $domainVerifier;
         $this->certificateManager = $certificateManager;
     }
 
@@ -19,7 +19,7 @@ class CertificateService
     {
         $domain = $request->getDomain();
 
-        if (!$this->domainVerifyer->verify($domain)) {
+        if (!$this->domainVerifier->verify($domain)) {
             throw new \Exception('Domain is not verified');
         }
 
