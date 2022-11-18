@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\DTOs\Certificate;
 use App\DTOs\CreateCertificateRequest;
 
 class CertificateService
@@ -15,7 +16,7 @@ class CertificateService
         $this->certificateManager = $certificateManager;
     }
 
-    public function createCertificate(CreateCertificateRequest $request)
+    public function createCertificate(CreateCertificateRequest $request): Certificate
     {
         $domain = $request->getDomain();
 

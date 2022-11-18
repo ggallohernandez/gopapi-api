@@ -16,10 +16,6 @@ class CertificateManager implements ICertificateManager
 
     public function createCertificate(CreateCertificateRequest $request): Certificate
     {
-        if (!$this->domainVerifier->verify($request->domain)) {
-            throw new \Exception('Domain is not verified');
-        }
-
         // todo: create certificate
         return new Certificate($request->getDomain(), 'cert', 'pk');
     }
