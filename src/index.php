@@ -59,7 +59,15 @@ $container->autowire(CertificateController::class, CertificateController::class)
 $routes = new RouteCollection();
 $routes->add('create_cert', (new Route('/certificate/new', [
     '_controller' => [$container->get(CertificateController::class), 'create']]))
-    ->setMethods(['POST', 'GET'])
+    ->setMethods(['POST'])
+);
+$routes->add('create_csr', (new Route('/certificate_signing_request/new', [
+    '_controller' => [$container->get(CertificateController::class), 'createCsr']]))
+    ->setMethods(['POST'])
+);
+$routes->add('verify_domain', (new Route('/domain/verify', [
+    '_controller' => [$container->get(DomainController::class), 'verifyDomain']]))
+    ->setMethods(['POST'])
 );
 
 $request = Request::createFromGlobals();

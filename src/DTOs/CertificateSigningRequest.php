@@ -2,7 +2,9 @@
 
 namespace App\DTOs;
 
-class CertificateSigningRequest
+use JsonSerializable;
+
+class CertificateSigningRequest implements JsonSerializable
 {
     public string $commonName = '';
     public string $content = '';
@@ -15,4 +17,13 @@ class CertificateSigningRequest
     public string $country = 'US';
     public int $keySize = 2048;
     public string $keyType = 'RSA';
+
+    public function jsonSerialize()
+    {
+        return [
+            'commonName' => $this->commonName,
+            'csr' => $this->content,
+            'private_key' => $this->private_key
+        ];
+    }
 }
