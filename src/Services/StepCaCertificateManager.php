@@ -5,7 +5,7 @@ namespace App\Services;
 use App\DTOs\Certificate;
 use App\DTOs\CreateCertificateRequest;
 
-class CertificateManager implements ICertificateManager
+class StepCaCertificateManager implements ICertificateManager
 {
     protected IDomainVerifier $domainVerifier;
 

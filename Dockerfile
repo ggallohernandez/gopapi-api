@@ -7,7 +7,11 @@ EXPOSE 9000
 RUN pecl install xdebug \
     && docker-php-ext-enable xdebug
 
-RUN apt update && apt install -y git zip unzip
+RUN apt update && apt install -y git zip unzip wget
+
+RUN mkdir -p /var/local/step \
+    && wget -O /tmp/step-cli.deb https://dl.step.sm/gh-release/cli/docs-cli-install/v0.21.0/step-cli_0.21.0_amd64.deb \
+    && dpkg -i /tmp/step-cli.deb
 
 COPY ./install_composer.sh /usr/local/bin/install_composer
 RUN chmod +x /usr/local/bin/install_composer \
