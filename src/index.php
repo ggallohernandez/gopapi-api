@@ -29,6 +29,7 @@ use App\Controllers\CertificateController;
 use App\Services\CertificateManager;
 use App\Services\CertificateService;
 use App\Services\ICertificateManager;
+use App\Services\IDnsRecordFetcher;
 use App\Services\IDomainVerifier;
 use App\Services\TxtDnsRecordVerifier;
 
@@ -42,7 +43,9 @@ try {
 
 $container = new ContainerBuilder();
 
-$container->autowire(IDomainVerifier::class, TxtDnsRecordVerifier::class);
+$container->autowire(IDnsRecordFetcher::class, TxtDnsRecordVerifier::class);
+$container->autowire(IDomainVerifier::class, TxtDnsRecordVerifier::class)
+    ->setArgument(new Reference(IDnsRecordFetcher::class));
 $container->autowire(ICertificateManager::class, CertificateManager::class)
     ->addArgument(new Reference(IDomainVerifier::class));
 $container->autowire(CertificateService::class, CertificateService::class)
@@ -54,7 +57,7 @@ $container->autowire(CertificateController::class, CertificateController::class)
 $routes = new RouteCollection();
 $routes->add('create_cert', (new Route('/certificate/new', [
     '_controller' => [$container->get(CertificateController::class), 'create']]))
-    ->setMethods(['POST'])
+    ->setMethods(['POST', 'GET'])
 );
 
 $request = Request::createFromGlobals();

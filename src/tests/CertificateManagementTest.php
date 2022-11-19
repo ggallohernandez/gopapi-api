@@ -8,7 +8,10 @@ use PHPUnit\Framework\TestCase;
 use App\DTOs\CreateCertificateRequest;
 use App\Services\CertificateService;
 use App\Services\ICertificateManager;
+use App\Services\IDnsRecordFetcher;
 use App\Services\IDomainVerifier;
+use App\Services\TxtDnsRecordFetcher;
+use App\Services\TxtDnsRecordVerifier;
 
 class CertificateManagementTest extends TestCase
 {
@@ -25,9 +28,11 @@ class CertificateManagementTest extends TestCase
         
         $request = new CreateCertificateRequest($domain, $validity_in_days, $csr);
 
-        $domainVerifierService = $this->createStub(IDomainVerifier::class);
-        $domainVerifierService->method('verify')
-             ->willReturn(true);
+        $dnsRecordFetcher = $this->createStub(IDnsRecordFetcher::class);
+        $dnsRecordFetcher->method('getTxtRecords')
+             ->willReturn([TxtDnsRecordVerifier::TXT_RECORD_PREFIX.'=test']);
+
+        $domainVerifierService = new TxtDnsRecordVerifier($dnsRecordFetcher);
 
         $certificateManager = $this->createStub(ICertificateManager::class);
         $certificateManager->method('createCertificate')
