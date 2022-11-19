@@ -3,21 +3,22 @@
 namespace App\DTOs;
 
 
-class CreateCertificateRequest
+class CreateCertificateRequest extends Certificate
 {
-    protected string $domain;
-    protected int $validity_days;
-    protected string $csr;
+    public int $keySize = 2048;
+    public string $keyType = 'RSA';
+    public int $validityInDays = 365;
+    public string $csr = '';
 
-    public function __construct(string $domain, int $validity_days, string $csr)
+    public function __construct(string $domain, int $validityInDays, string $csr)
     {
-        $this->domain = $domain;
-        $this->validity_days = $validity_days;
+        $this->commonName = $domain;
+        $this->validityInDays = $validityInDays;
         $this->csr = $csr;
     }
 
     public function getDomain(): string
     {
-        return $this->domain;
+        return $this->commonName;
     }
 }

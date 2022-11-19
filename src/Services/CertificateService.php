@@ -3,7 +3,9 @@
 namespace App\Services;
 
 use App\DTOs\Certificate;
+use App\DTOs\CertificateSigningRequest;
 use App\DTOs\CreateCertificateRequest;
+use App\DTOs\CreateCertificateSigningRequest;
 
 class CertificateService
 {
@@ -27,5 +29,12 @@ class CertificateService
         $certificate = $this->certificateManager->createCertificate($request);
 
         return $certificate;
+    }
+
+    public function createCertificateSigningRequest(CreateCertificateSigningRequest $request): CertificateSigningRequest
+    {
+        $csr = $this->certificateManager->createCertificateSigningRequest($request);
+
+        return $csr;
     }
 }

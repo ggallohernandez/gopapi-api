@@ -35,6 +35,8 @@ use App\Services\TxtDnsRecordVerifier;
 
 $dotenv = new Dotenv();
 
+define('APP_ROOT', __DIR__);
+
 try {
     $dotenv->load(__DIR__ . '/.env');
 } catch (PathException $e) {
